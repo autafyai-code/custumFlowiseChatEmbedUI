@@ -563,22 +563,22 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
     }
 
     if (!bottomSpacer) return;
-setTimeout(() => {
-  chatContainer?.scrollTo({ top: 0, behavior: 'smooth' });
-}, 50);
-});
-
-const scrollToBottom = () => {
-  setTimeout(() => {
-    // Scroll to show the start of the newest message
-    const lastMessage = chatContainer?.querySelector('.message-container > *:last-child');
-    if (lastMessage) {
-      lastMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
+    setTimeout(() => {
       chatContainer?.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, 50);
-};
+    }, 50);
+  });
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      // Scroll to show the start of the newest message
+      const lastMessage = chatContainer?.querySelector('.message-container > *:last-child');
+      if (lastMessage) {
+        lastMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        chatContainer?.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 50);
+  };
 
   // Helper function to manage TTS action flag
   const setTTSAction = (isActive: boolean) => {
@@ -1286,20 +1286,20 @@ const scrollToBottom = () => {
   });
 
   /// Auto scroll to show start of new messages (but not during TTS actions)
-createEffect(() => {
-  if (messages()) {
-    if (messages().length > 1 && !isTTSActionRef) {
-      setTimeout(() => {
-        const lastMessage = chatContainer?.querySelector('.bot-message:last-of-type, .user-message:last-of-type');
-        if (lastMessage) {
-          lastMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          chatContainer?.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 400);
+  createEffect(() => {
+    if (messages()) {
+      if (messages().length > 1 && !isTTSActionRef) {
+        setTimeout(() => {
+          const lastMessage = chatContainer?.querySelector('.bot-message:last-of-type, .user-message:last-of-type');
+          if (lastMessage) {
+            lastMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            chatContainer?.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 400);
+      }
     }
-  }
-});
+  });
 
   createEffect(() => {
     if (props.fontSize && botContainer) botContainer.style.fontSize = `${props.fontSize}px`;
